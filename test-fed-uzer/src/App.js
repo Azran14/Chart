@@ -6,15 +6,9 @@ function App() {
   const [valueX, setValueX] = useState({});
   const [valueY, setValueY] = useState({});
   const [visible, setVisible] = useState(false);
-  let chartClasses = "chart ";
 
   function handleClick() {
-    if (chartClasses !== "chart") {
-      chartClasses = "chart--visible";
-      console.log(visible);
-      console.log(setVisible);
-      console.log(chartClasses);
-    }
+    setVisible(true);
   }
 
   return (
@@ -26,6 +20,7 @@ function App() {
           type="number"
           placeholder="ex : 7"
           required
+          label="Required"
           onChange={(e) => setValueX(e.target.value)}
         />
         <label>Y</label>
@@ -36,23 +31,24 @@ function App() {
           required
           onChange={(e) => setValueY(e.target.value)}
         />
-        <button onClick={handleClick} />
+        <button onClick={handleClick}> poop</button>
       </div>
-      <Chart
-        className={chartClasses}
-        width={"500px"}
-        height={"300px"}
-        chartType="PieChart"
-        loader={<div>Loading Chart</div>}
-        data={[
-          ["Your chart", "charterino"],
-          ["X", parseInt(valueX)],
-          ["Y", parseInt(valueY)],
-        ]}
-        options={{
-          title: "My Graph",
-        }}
-      />
+      {visible && (
+        <Chart
+          width={"500px"}
+          height={"300px"}
+          chartType="PieChart"
+          loader={<div>Loading Chart</div>}
+          data={[
+            ["Your chart", "charterino"],
+            ["X", parseInt(valueX)],
+            ["Y", parseInt(valueY)],
+          ]}
+          options={{
+            title: "My Graph",
+          }}
+        />
+      )}
     </div>
   );
 }
