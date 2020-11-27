@@ -4,12 +4,15 @@ import { useState } from "react";
 import icon from "../src/Logo.png";
 
 function App() {
-  const [valueX, setValueX] = useState({});
-  const [valueY, setValueY] = useState({});
+  const [valueX, setValueX] = useState(0);
+  const [valueY, setValueY] = useState(0);
   const [visible, setVisible] = useState(false);
 
-  function handleClick() {
-    setVisible(true);
+  function handleClick(e) {
+    e.preventDefault();
+    if (Number(valueX) !== 0 && Number(valueY) !== 0) {
+      setVisible(true);
+    }
   }
 
   return (
@@ -18,32 +21,31 @@ function App() {
       <h1 className="title">Bienvenue sur votre espace Client</h1>
       <div className="container">
         <h2>Renseignez une valeur pour chaque champs</h2>
-        <div className="container__input">
+        <form id="chartForm" className="container__input">
           <div className="container__input--X">
-            <label>Renseignez la valeur X</label>
+            <label>Renseignez la valeur X*</label>
             <input
               id="X"
               type="number"
               placeholder="ex : 7"
-              required
+              required="required"
               onChange={(e) => setValueX(e.target.value)}
             />
           </div>
           <div className="container__input--Y">
-            <label>Renseignez la valeur Y</label>
+            <label>Renseignez la valeur Y*</label>
             <input
               id="Y"
               type="number"
               placeholder="ex : 5"
-              required
+              required="required"
               onChange={(e) => setValueY(e.target.value)}
             />
           </div>
-        </div>
-        <button onClick={handleClick}>
+        </form>
+        <button form="chartForm" onClick={handleClick}>
           <em>Visualiser</em>
         </button>
-
         {visible && (
           <div className="container__chart">
             <div className="container__chart--pie">
@@ -54,8 +56,8 @@ function App() {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ["Votre graphique", "En X et Y"],
-                  ["X", parseInt(valueX)],
-                  ["Y", parseInt(valueY)],
+                  ["X", Number(valueX)],
+                  ["Y", Number(valueY)],
                 ]}
                 options={{
                   title: "Votre graphique personnalisé (PieChart)",
